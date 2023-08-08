@@ -21,7 +21,11 @@ export const useSalesHook =() => {
 
           const json = await response.json()
           if(response.ok) {
-             setSales(json.data[0])
+             if(json.data.length <= 0) {
+              setSales(null)
+             } else {
+              setSales(json.data[0])
+             }
              setIsLoading(false)
           }
       
