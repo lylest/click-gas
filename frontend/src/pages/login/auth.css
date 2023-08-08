@@ -1,0 +1,107 @@
+.auth-container {
+    width: 100%;
+    height: 100%;
+}
+.auth-left-wrapper {
+    width: 100%;
+    background-color: var(--bg1);
+}
+.auth-right-wrapper {
+    width: 100%;
+}
+.logo-and-text {
+    display:inline-flex;
+    margin-left: 10%;
+    margin-top: 15px;
+}
+.logo-and-text  img {
+    width: 40px;
+    height: 40px;
+    margin: 20px 10px 10px 0px;
+}
+.logo-and-text h2 {
+    color:var(--primary-color);
+    margin:0px;
+    padding: 27px 10px 10px 0px;
+}
+.auth-inputs {
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 10%;
+}
+.auth-inputs h2 {
+    color:var(--text-color2);
+    padding: 12px;
+}
+#auth-textinput {
+    margin: 12px;
+    width: 86%;
+}
+#auth-longinput {
+    margin: 12px;
+    width: 86%;
+}
+.short-text-input {
+    width: 100%;
+}
+.auth-inputs p{
+    padding: 12px;
+    color: var(--text-color3);
+}
+#submit-button {
+    margin: 12px;
+    width: 86%;
+}
+.google-button {
+    margin:12px;
+    width: 86%;
+}
+.landing-image {
+    width: 70%;
+    margin: 0px  0px 10px 15%;
+}
+.landing-image img {
+    width:60%;
+    height: 60%;
+    object-fit: contain;
+    margin: 0px 0px 0px 20%;
+}
+.auth-right-wrapper h1 {
+    text-align: center;
+    padding:12px;
+    color: var(--primary-color);
+}
+.auth-right-wrapper p {
+    text-align:center;
+    justify-self: start;
+    padding: 12px;
+    font-size:18px;
+    width: 70%;
+    margin-left: 15%;
+}
+.p-password {
+    width: 100%;
+}
+.p-password-input {
+    width: 100%;
+}
+.auth-inputs-wrapper {
+    width: 90%;
+    margin: 5% 3% 3% 8%;
+}
+@media(min-width: 1000px) {
+    .auth-container {
+        display: grid;
+        grid-template-columns: 2fr 2fr;
+    }
+    #auth-textinput {
+        margin: 12px;
+        width: 41%;
+    }
+    .p-password {
+        width: 100%;
+    }
+    .p-password-input {
+        width: 100%;
+    }
+}

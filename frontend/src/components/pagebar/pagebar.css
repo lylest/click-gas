@@ -1,0 +1,113 @@
+.page-bar-wrapper {
+    width: 100%;
+    height: 80px;
+    background-color: var(--bg1);
+    border-bottom: 1px solid var(--bg8);
+    display: inline-flex;
+    margin-top: -10px;
+}
+.top-bar-far {
+    margin-left: auto;
+    display: inline-flex;
+    margin-right:10px;
+}
+.rounded {
+    width:auto;
+    height:50px;
+    border-radius:25px;
+    margin:15px;
+    display: inline-flex;
+    background-color: var(--bg1);
+}
+.rounded img {
+    width: 50px;
+    height: 50px;
+    border-radius:25px;
+}
+.rounded h3 {
+    padding:10px;
+    margin:0px;
+    color:var(--text-color2);
+}
+.log-out-btn {
+    width: 40px;
+    height: 40px;
+    border-radius:20px;
+    display:grid;
+    font-size: 27px;
+    place-items: center;
+}
+.top-bar-wrapper h3 {
+    color: var(--text-color);
+    padding:15px 12px 0px 15px; 
+}
+.popover-profile {
+    width:300px;
+    height:400px;
+    background-color: #fff;
+    margin-right: 30px;
+    border-radius: 4px;
+  }
+  .popover-profile div {
+    border:0px;
+  }
+  
+.logo {
+    width: 100%;
+    
+}
+.logo img {
+    width: 60px;
+    height: 60px;
+    border-radius:30px;
+    margin:20px 0px 0px 140px;
+}
+.logo h3 {
+    padding-top: 0px;
+    margin-bottom: 0px;
+   text-align: center;
+   color: #000;
+}
+.logo p {
+    padding-top:5px;
+    text-align: center;
+    color: #555;
+}
+.menu-bottom {
+    width: 100%;
+}
+.dot {
+   margin: 0px 0px  10px 25px;
+   position:relative;
+}
+.badge-box {
+    width:60px;
+    display: none;
+}
+.bell {
+   margin: 0px 0px 0px 10px;
+}
+.usernames h4 {
+    margin: 0px;
+    font-size: 15px;
+    padding: 20px 9px 0px 0px;
+}
+.usernames p {
+    margin: 5px 0px 0px 0px;
+    font-size: 13px;
+    color: var(--text-color3);
+    padding: -9px 15px 0px 15px;
+
+}
+#far-container {
+    display:none;
+}
+@media (min-width: 1000px) {
+    .page-bar-wrapper {
+        margin-top: 0px;
+
+    }
+    #far-container {
+        display:inline-flex;
+    }
+}

@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+
+/backend/node_modules
+/frontend/node_modules
+#/musicpot-client/node_modules
+
+/backend/access.log
+/backend/assets/files/
+
+
+/backend/.DS_Store
+/backend/.env.local
+/backend/.env.development.local
+/backend/.env.test.local
+/backend/.env.production.local
+
+/frontend/.DS_Store

@@ -1,0 +1,9 @@
+.mini-far {
+    margin-left: auto;
+    margin-top: 20px;
+    margin-right: 30px;
+}
+.mini-bar {
+    width: 100%;
+    display: inline-flex;
+}

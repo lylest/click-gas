@@ -1,0 +1,14 @@
+.direction-stats {
+    width: 90%;
+    margin: 15px;
+}
+.direction-stats h3 {
+    color: var(--text-color);
+    padding: 12px;
+}
+.direction-stats span {
+    color: var(--text-color3);
+}
+.direction-stats p {
+    padding: -10px 12px 12px 30px;
+}

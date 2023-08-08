@@ -1,0 +1,14 @@
+.empty-center {
+    width: 300px;
+    margin: 0 auto;
+    margin-top: 0px;
+}
+.empty-center p {
+    font-size:20px;
+    text-align: center;
+    padding: 12px;
+    color:var(--text-color3);
+}
+.center-icon {
+    margin-left: 110px;
+}

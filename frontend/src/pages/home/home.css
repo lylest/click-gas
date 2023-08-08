@@ -1,0 +1,11 @@
+.grid-wrapper {
+    width: 97%;
+    height: 100vh;
+    overflow: auto;
+    margin: 0px 15px 15px 15px;
+}
+#col-12 {
+    background-color: var(--bg1);
+    border-radius: 12px;
+    margin: 15px 10px 10px 0px;
+}

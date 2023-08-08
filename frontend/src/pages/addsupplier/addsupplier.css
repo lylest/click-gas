@@ -1,0 +1,34 @@
+.two-grid {
+    width: 100%;
+    height: 100vh;
+}
+.grid-one {
+    width: 100%;
+    height: 50vh;
+    overflow: auto;
+}
+.grid-two {
+    width: 100%;
+    height:50vh;
+    overflow: auto;
+}
+.grid-one h3 {
+    padding: 12px 12px 0px 25px;
+    color: var(--text-color2);
+}
+.card-input {
+    margin: 20px 15px 10px 25px;
+}
+@media(min-width:1000px) {
+    .two-grid {
+      display: inline-flex;
+    }
+    .grid-one {
+        width: 30%;
+        height: 100vh;
+    }
+    .grid-two {
+        width: 70%;
+        height: 100vh;
+    }
+}
