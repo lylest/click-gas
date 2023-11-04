@@ -20,6 +20,11 @@ const customerSchema = new Schema({
         type: String,
         required: true
     },
+    physicalAddress:{
+        type: String,
+        required:true,
+        default: "/n"
+    },
     device:{
         type:Schema.Types.ObjectId,
         ref:"devices",

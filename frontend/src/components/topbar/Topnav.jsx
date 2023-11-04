@@ -10,7 +10,7 @@ const[ visible, setVisible] = useState(false)
   return (
     <div className='top-bar-wrapper'>
       <div className='logo-box'>
-        <img src={logo} alt="face2face logo" loading='lazy' />
+        <img src={logo} alt="clcik-gasface logo" loading='lazy' />
       </div>
       <p style={{ color: '#fff'}}>Click-Gas</p>
 

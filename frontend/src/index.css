@@ -83,7 +83,7 @@ h1, h2, h3, h4, h5 {
 }
 html {
   scroll-behavior: smooth;
-  font-size: 13px;
+ font-size: 14px;
 }
   .p-scrollpanel-bar .p-scrollpanel-bar-y {
     background-color: var(--primary-color);
@@ -149,6 +149,18 @@ html {
     transition: background 0s;
   }
 
+  .fab {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin:50px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background-color: var(--primary-color);
+  }
   @media (min-width:1000px) {
     .container {
       width: 100%;

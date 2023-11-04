@@ -241,10 +241,118 @@ const getSales = async (req, res) => {
   }
 }
 
-const getUsages = async (req, res) => {
+
+const getDeviceUsages = async (req, res) => {
   try {
       const { id } = req.query
-      const usages = await Usage.aggregate([]) 
+      const { fromDate, toDate }  = req.body
+
+      const usages = await Usage.aggregate([
+          {
+            '$match': {
+              '$expr': {
+                '$eq': [
+                  '$device', {
+                    '$toObjectId': id
+                  }
+                ]
+              }
+            }
+          },
+          {
+        '$match': {
+           '$and':[
+              {
+               'createdAt': {
+               '$gte': new Date(fromDate), 
+               '$lte': new Date(toDate)
+                }
+              }
+              //{ 'transactionType': { $in: transactionType } }
+           ]
+        }
+      },
+        ])
+
+      if(usages.length >= 0) { return res.status(200).json({ message: 'Usages', data: usages })} else {
+        return res.status(404).json({ message: 'No usages found', data:  usages })
+      }  
+
+
+  } catch(error) {
+    let code = error.errors ? 422 : 500
+    let response = error.errors ? error.errors[0] : error.message
+    return res.status(code).json({ message: response })
+  }
+}
+
+
+const getUsages = async (req, res) => {
+  try {
+      const { id, prediction, usage } = req.query
+  
+      if(prediction) {
+        const prediction = await Usage.aggregate([
+          {
+            '$match': {
+              '$expr': {
+                '$eq': [
+                  '$device', {
+                    '$toObjectId': id
+                  }
+                ]
+              }
+            }
+          }, {
+            '$sort': {
+              'createdAt': 1
+            }
+          }, {
+            '$group': {
+              '_id': null, 
+              'firstUsage': {
+                '$first': '$$ROOT.amount'
+              }, 
+              'firstTimestamp': {
+                '$first': '$$ROOT.createdAt'
+              }, 
+              'lastUsage': {
+                '$last': '$$ROOT.amount'
+              }, 
+              'lastTimestamp': {
+                '$last': '$$ROOT.createdAt'
+              }
+            }
+          }, {
+            '$project': {
+              'rateOfUsage': {
+                '$divide': [
+                  {
+                    '$subtract': [
+                      '$firstUsage', '$lastUsage'
+                    ]
+                  }, 2
+                ]
+              }, 
+              'lastUsage': '$lastUsage'
+            }
+          }, {
+            '$project': {
+              'predictedDaysToEmpty': {
+                '$divide': [
+                  '$lastUsage', '$rateOfUsage'
+                ]
+              }
+            }
+          }
+        ]) 
+
+
+        
+        if(prediction) { return res.status(200).json(prediction) } else {
+          return res.status(401).json({ message:"Failed to get prediction", data: prediction})
+        }
+      } else if (usage) { getDeviceUsages(req, res)}
 
 
   } catch(error) {

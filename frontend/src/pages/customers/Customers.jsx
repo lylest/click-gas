@@ -5,7 +5,7 @@ import Loader from "../../components/loader/Loader"
 import Sider from '../../components/sider/Sider'
 import Topnav from '../../components/topbar/Topnav'
 import MenuIcon from '../../components/menuitem/MenuIcon'
-import { BiGroup } from "react-icons/bi"
+import { BiGroup, BiMap } from "react-icons/bi"
 import { Button } from 'primereact/button'
 import { Dialog } from 'primereact/dialog'
 import { useCustomerHook } from './useCustomerHook'
@@ -19,7 +19,7 @@ import { useGlobalContextHook } from "../../hook/useGlobalContextHook"
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import { Tag } from 'primereact/tag'
-import { BiBattery, BiCalendar, BiChip, BiCircle, BiDollar, BiEnvelope, BiGasPump, BiHealth, BiMapPin, BiSolidTachometer, BiUser, BiPhone } from 'react-icons/bi'
+import { BiBattery, BiCalendar, BiChip, BiCircle, BiEnvelope, BiHealth, BiMapPin, BiUser, BiPhone } from 'react-icons/bi'
 
 
 function Customers() {
@@ -53,7 +53,9 @@ function Customers() {
         isEditOpen, 
         setIsEditOpen,
         saveCustomer,
-        searchCustomers
+        searchCustomers,
+        physicalAddress, 
+        setPhysicalAddress
      } = useCustomerHook()
 
      const footerContent = (
@@ -225,6 +227,7 @@ const confirm1 = () => {
                  <MenuIcon  title={isEnglish ? "Phone": "Simu"} rightTitle={activeCustomer.phoneNumber} Icon={BiPhone} />
                  <MenuIcon  title={isEnglish ? "Email": "Barua pepe"} rightTitle={activeCustomer.email} Icon={BiEnvelope} />
                  <MenuIcon  title={isEnglish ? "Address": "Makazi"} rightTitle={activeCustomer.address} Icon={BiMapPin} />
+                 <MenuIcon  title={isEnglish ? "Physical Address": "Anwani Makazi"} rightTitle={activeCustomer.physicalAddress} Icon={BiMap} />
             
                  <h3 style={{ padding: 20 }}>Device details</h3>
                 {activeCustomer.device !== null ? 
@@ -267,6 +270,11 @@ const confirm1 = () => {
         </div> 
 
         <div className="flex flex-column gap-2" style={{ marginTop: 15 }}>
+            <label htmlFor="physical-address">{isEnglish ? "Physical address": "Anwani ya makazi"}</label> 
+            <InputText id="physical-address" value={physicalAddress} onChange={(e) => setPhysicalAddress(e.target.value)} aria-describedby="username-help" />
+        </div> 
+
+        <div className="flex flex-column gap-2" style={{ marginTop: 15 }}>
             <label htmlFor="address">{isEnglish ? "Address": "Makazi"}</label> 
             <InputText id="address" value={address} onChange={(e) => setAddress(e.target.value)} aria-describedby="username-help" />
         </div> 
@@ -304,6 +312,11 @@ const confirm1 = () => {
             <InputText id="email" value={email} onChange={(e) => setEmail(e.target.value)} aria-describedby="username-help" />
         </div> 
 
+        <div className="flex flex-column gap-2" style={{ marginTop: 15 }}>
+            <label htmlFor="physical-address">{isEnglish ? "Physical address": "Anwani ya makazi"}</label> 
+            <InputText id="physical-address" value={physicalAddress} onChange={(e) => setPhysicalAddress(e.target.value)} aria-describedby="username-help" />
+        </div> 
+        
         <div className="flex flex-column gap-2" style={{ marginTop: 15 }}>
             <label htmlFor="address">{isEnglish ? "Address": "Makazi"}</label> 
             <InputText id="address" value={address} onChange={(e) => setAddress(e.target.value)} aria-describedby="username-help" />

@@ -14,7 +14,7 @@ function Sider() {
   return (
     <div className="sider-wrapper">
        <div className='sider-little-bar'>
-       <div className='logo-box'><img src={logo} alt="face2face logo" loading='lazy' /></div>
+       <div className='logo-box'><img src={logo} alt="clcik-gasface logo" loading='lazy' /></div>
        
        <h3 className='sider-title-left'>Click-Gas</h3>
        </div>

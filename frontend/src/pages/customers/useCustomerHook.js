@@ -13,6 +13,7 @@ export const useCustomerHook =()=> {
     const [ phone, setPhone ] = useState("")
     const [ email, setEmail ] = useState("")
     const [ address, setAddress ] = useState("")
+    const [ physicalAddress, setPhysicalAddress ] = useState("")
     const [ isLoading, setIsLoading ] = useState(true)
     const [ activeCustomer, setActiveCustomer ] = useState(null)
     const [ selectedSupplier, setSelectedSupplier ] = useState(null)
@@ -26,6 +27,7 @@ export const useCustomerHook =()=> {
                 fullName:fullName,
                 phoneNumber:phone,
                 email:email,
+                physicalAddress:physicalAddress,
                 supplier:selectedSupplier._id,
                 address:address,
                 device:selectedDevice._id,
@@ -142,6 +144,7 @@ export const useCustomerHook =()=> {
       setAddress(data.address)
       setSelectedSupplier(data.supplier)
       setSelectedDevice(data.device)
+      setPhysicalAddress(data.physicalAddress)
     }
 
     const deleteCustomer = async() => {
@@ -177,6 +180,7 @@ export const useCustomerHook =()=> {
               fullName:fullName,
               phoneNumber:phone,
               email:email,
+              physicalAddress:physicalAddress,
               supplier:selectedSupplier._id,
               address:address,
               device:selectedDevice._id,
@@ -260,6 +264,8 @@ export const useCustomerHook =()=> {
         isEditOpen, 
         setIsEditOpen,
         saveCustomer,
-        searchCustomers
+        searchCustomers,
+        physicalAddress, 
+        setPhysicalAddress
     }
 }

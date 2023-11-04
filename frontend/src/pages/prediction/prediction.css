@@ -1,0 +1,53 @@
+.usage-wrapper {
+    width: 100%;
+}
+.usage-section {
+    width: 90%;
+    margin: 15px;
+    background-color: var(--bg1);
+    border-radius: 5px;
+}
+.usage-sider {
+    width: 90%;
+    margin: 15px;
+    background-color: var(--bg1);
+    border-radius: 6px;
+}
+
+.usage-section .bar {
+    width: 100%;
+    display: inline-flex;
+}
+.usage-section h3 {
+    padding: 12px;
+    color: var(--text-color2);
+}
+.item-card {
+    margin: 20px 7px 15px 15px;
+}
+
+.usage-sider h3 {
+    padding: 12px;
+    color: var(--text-color2);
+}
+
+@media (min-width:1000px) {
+    .usage-wrapper {
+         width: 100%;
+        display: inline-flex;
+    }
+    
+    .usage-section {
+         width: 60%;
+        margin: 15px;
+        background-color: var(--bg1);
+        border-radius: 5px;
+    }
+    
+     .usage-sider {
+        width: 40%;
+        margin: 15px;
+        background-color: var(--bg1);
+        border-radius: 6px;
+        }
+    }

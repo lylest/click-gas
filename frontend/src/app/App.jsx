@@ -9,10 +9,12 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import  Loader from '../components/loader/Loader'
 import { useAppHook } from './useAppHook'
+import { BiCloudLightRain } from 'react-icons/bi'
 
 function App() {
 const {         
-    isUserLoggedIn
+    isUserLoggedIn,
+    toggleTheme
   } = useAppHook()
 
   return (
@@ -23,6 +25,8 @@ const {
       <Loader />
     }
       <Toaster  position='bottom-center' duration="5000" />
+    {/**  <div className='fab' id="touchable" onClick={() => toggleTheme()}
+      > <BiCloudLightRain size={25} color="#FFF" /></div> */}
     </Router>
   )
 }

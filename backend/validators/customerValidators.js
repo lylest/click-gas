@@ -7,7 +7,8 @@ const customerValidators = object({
     supplier:string().required(),
     address:string().required(),
     device:string().required(),
-    createdBy:string().required()
+    createdBy:string().required(),
+    physicalAddress:string().required()
 })
 
 module.exports = { customerValidators }

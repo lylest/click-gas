@@ -22,13 +22,15 @@ import { Tag } from 'primereact/tag'
 import { Menu } from 'primereact/menu'
 import { OverlayPanel } from 'primereact/overlaypanel'
 import { Sidebar } from 'primereact/sidebar'
+import { useNavigate } from 'react-router-dom'
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog'
 import { GoogleMap, useLoadScript, MarkerF} from '@react-google-maps/api'
 import { useGlobalContextHook } from "../../hook/useGlobalContextHook"
-import { BiBattery, BiCalendar, BiChip, BiCircle, BiDollar, BiEnvelope, BiGasPump, BiHealth, BiMapPin, BiSolidTachometer, BiUser, BiPhone, BiQrScan } from 'react-icons/bi'
+import { BiBattery, BiCalendar, BiChip, BiCircle, BiDollar, BiEnvelope, BiGasPump, BiHealth, BiMapPin, BiSolidTachometer, BiUser, BiPhone, BiQrScan, BiMap, BiChart } from 'react-icons/bi'
 
 function Devices() {
     const  popoverRef = useRef(null)
+    const  navigate = useNavigate()
     const { isEnglish } = useGlobalContextHook()
     const { suppliers } = useSupplierHook()
     const { isLoaded } = useLoadScript({
@@ -171,9 +173,14 @@ function Devices() {
                 <span className="pi pi-qrcode" />
             </button>
 
-            <button className="p-sidebar-icon p-link mr-2" onClick={() => setEditOpen(true)}>
+            <button className="p-sidebar-icon p-link mr-2" onClick={() => navigate(`/prediction/${activeDevice._id}`)}>
+                <span className="pi pi-chart-bar" />
+            </button>
+
+        <button className="p-sidebar-icon p-link mr-2" onClick={() => setEditOpen(true)}>
                 <span className="pi pi-pencil" />
             </button>
+
 
             <button className="p-sidebar-icon p-link mr-2" onClick={() => confirm1()}>
                 <span className="pi pi-trash" />
@@ -196,9 +203,10 @@ function Devices() {
             icon: 'pi pi-exclamation-triangle',
             accept,
             reject
-        });
-    };
+        })
+    }
 
+  //console.log(activeDevice)
   return (
     <div className='page-container'>
       <Topnav  page="home"/>
@@ -258,6 +266,7 @@ function Devices() {
                 <MenuIcon  title={isEnglish ? "Status": "Hali"} rightTitle={activeDevice.deviceStatus} Icon={BiCircle} />
                 <MenuIcon  id="touchable" onClick={() => activateDevice()}  title={isEnglish ? "Activation": "Uhuisha"} rightTitle={activeDevice.activation} Icon={BiQrScan} />
                 <MenuIcon  title={isEnglish ? "Location": "Mahali"} rightTitle={activeDevice.address} Icon={BiMapPin} />
+                <MenuIcon  title={isEnglish ? "GPS Coordinates": "GPS"} rightTitle={activeDevice.location.coordinates[0]+' , '+activeDevice.location.coordinates[1]} Icon={BiMap} />
                 <div className='supplier-location'>
                     { isLoaded ? <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={10}>  
                        <MarkerF draggable={false} 
@@ -275,6 +284,7 @@ function Devices() {
                 <MenuIcon  title={isEnglish ? "Weight": "Uzito"} rightTitle={activeDevice.weight} Icon={BiSolidTachometer} />
                 <MenuIcon  title={isEnglish ? "Buying price": "Bei ya kununulia"} rightTitle={activeDevice.sellingPrice.toLocaleString()} Icon={BiDollar} />
                 <MenuIcon  title={isEnglish ? "Selling Price": "Bei ya Kuuzia"} rightTitle={activeDevice.buyingPrice.toLocaleString()} Icon={BiDollar} />
+                <Button    style={{ margin: 15 }} onClick={()=> navigate(`/prediction/${activeDevice._id}`)} icon={<BiChart size={20} color="#666" />} severity='secondary' text label={isEnglish ? "Usages" : "Matumizi"}></Button>
 
                 <h3 style={{ padding: 20 }}>Customer details</h3>
                  { activeDevice.customer !== null ? 
@@ -283,6 +293,7 @@ function Devices() {
                  <MenuIcon  title={isEnglish ? "Phone": "Simu"} rightTitle={activeDevice.customer.phoneNumber} Icon={BiPhone} />
                  <MenuIcon  title={isEnglish ? "Email": "Barua pepe"} rightTitle={activeDevice.customer.email} Icon={BiEnvelope} />
                  <MenuIcon  title={isEnglish ? "Address": "Makazi"} rightTitle={activeDevice.customer.address} Icon={BiMapPin} />
+                
                  </> :
                     <div className="card flex justify-content-center">
                         <Button label="Allocate device to  the customer"  outlined/>

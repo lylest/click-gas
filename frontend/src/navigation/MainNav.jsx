@@ -9,6 +9,7 @@ import Devices from '../pages/devices/Devices'
 import Suppliers from '../pages/suppliers/Suppliers'
 import Customers from '../pages/customers/Customers'
 import NotFound from '../components/notfound/NotFound'
+import Prediction from '../pages/prediction/Prediction'
 import AddSupplier from '../pages/addsupplier/AddSupplier'
 import EditSupplier from '../pages/editsupplier/EditSupplier'
 import ViewSupplier from '../pages/viewsupplier/ViewSupplier'
@@ -28,6 +29,7 @@ function UserNav() {
         <Route path="/account"  element={<Account />} />
         <Route path="/customers"  element={<Customers />} />
         <Route path="/suppliers"  element={<Suppliers />} />
+        <Route path="/prediction/:id"  element={<Prediction />} />
         <Route path="/add-supplier"  element={<AddSupplier />} />
         <Route path="/edit-supplier/:id"  element={<EditSupplier />} />
         <Route path="/view-supplier/:id"  element={<ViewSupplier />} />

@@ -6,6 +6,10 @@ const freeRoutes = [
    {
     model:"suppliers",
     action:["read"]
+   },
+  {
+    model:"usages",
+    action:["create"]
    }
 ]
 
