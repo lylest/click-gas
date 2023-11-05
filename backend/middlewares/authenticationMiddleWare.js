@@ -3,7 +3,7 @@ const { freeRoutes } = require("../utils/freeRoutes");
 
 async function authenticationMiddleWare(req, res, next) {
   try {
-    const { model,action } = req.params
+    const { model, action } = req.params
     const isModelExist = freeRoutes.some(route => route.model === model)
     const isActionExist = freeRoutes.some(route => route.action.includes(action))
     if(isModelExist && isActionExist) {

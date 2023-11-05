@@ -10,7 +10,15 @@ const freeRoutes = [
   {
     model:"usages",
     action:["create"]
-   }
+  },
+  {
+    model:"orders",
+    action:["create", "read"]
+  },
+    {
+    model:"devices",
+    action:["read", "update"]
+  }
 ]
 
 module.exports = { freeRoutes }
