@@ -148,12 +148,35 @@ const activateDevice = async (req, res) => {
   }
 }
 
+
+const updateDeviceBySerial = async (req, res) => {
+  try {
+    const { serial } = req.query
+    const { body } = req
+
+    const updatedDevice = await Device.findOneAndUpdate({ serialNumber: serial }, body, {
+      new: true
+    })
+    if (!updatedDevice) {
+      return res.status(404).json({
+        message: "Failed to update device details"
+      })
+    }
+    return res.status(200).json({ message: 'device details updated successfully', data: updatedDevice})
+    
+  } catch (e) {
+    return res.status(500).json({ message: e.message })
+  }
+}
+
 const updateDeviceDetails = async (req, res) => {
   try {
-    const { id, activation } = req.query
+    const { id, activation, serial } = req.query
     const { body } = req
    
-    if(activation) { activateDevice(req, res) } else {
+    if(activation) { activateDevice(req, res) } 
+    else if(serial ) { updateDeviceBySerial(req, res)}
+    else {
     const updatedDevice = await Device.findByIdAndUpdate(id, body, {
       new: true
     })

@@ -649,6 +649,24 @@ const searchDevice = async (req, res) => {
   }
 }
 
+const getDeviceBySerial = async (req, res) => {
+  try {
+    const { serial } = req.query
+    const deviceDetails = await Device.findOne({ serialNumber: serial, deviceStatus:{ $ne: 'deleted' }})
+    .populate({ path:"customer", model:"customers"})
+    .populate({ path:"supplier", select:"-password -permissions -customers -devices", model:"suppliers"})
+   
+    if(deviceDetails) { return res.status(200).json({ message:"Device details", data:deviceDetails })} else {
+      return res.status(442).json({ message: 'Failed to find device details', data: deviceDetails })
+    }
+
+  } catch (error) {
+    let code = error.errors ? 422 : 500
+    let response = error.errors ? error.errors[0] : error.message
+    return res.status(code).json({ message: response })
+  }
+}
+
 
 const getSpecificDevice = async (req, res) => {
   try {
@@ -670,11 +688,11 @@ const getSpecificDevice = async (req, res) => {
 
 const getDevice = async (req, res) => {
   try {
-      const { id, supplierId, search } = req.query
+      const { id, supplierId, search, serial } = req.query
       if(id) {
          getSpecificDevice(req, res)
-      } else if (supplierId) {
-         getSupplierDevices(req, res)
+      } else if (supplierId) { getSupplierDevices(req, res)
+      } else if (serial) { getDeviceBySerial(req, res)
       } else if (search) { searchDevice(req, res)}
         else {
         const allDevices = await Device.find({ deviceStatus:{ $ne: 'deleted' }})
