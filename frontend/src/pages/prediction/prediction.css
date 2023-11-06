@@ -30,7 +30,31 @@
     padding: 12px;
     color: var(--text-color2);
 }
-
+.usage-graph {
+    width: 92%;
+    height: 60vh;
+    background-color: var(--bg7);
+    margin: 15px;
+    border-radius: 4px;
+}
+.prediction-box {
+    width: 100%;
+    display: grid;
+    place-items: center;
+}
+.prediction-box h1 {
+    font-size: 60px;
+    color: var(--primary-color);
+}
+.prediction-box p {
+    font-size: 30px;
+    font-weight: 500;
+    color: var(--text-color2);
+}
+.usage-graph h3 {
+    color: var(--text-color2);
+    padding: 12px;
+}
 @media (min-width:1000px) {
     .usage-wrapper {
          width: 100%;

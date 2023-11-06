@@ -242,6 +242,79 @@ const getSales = async (req, res) => {
 }
 
 
+const getUsageGraph = async (req, res) => {
+  try {
+      const { id } = req.query
+      const { fromDate, toDate }  = req.body
+
+  const usages = await Usage.aggregate([
+  {
+    '$match': {
+      '$expr': {
+        '$eq': [
+          '$device', {
+            '$toObjectId': id
+          }
+        ]
+      }
+    }
+  },
+       {
+        '$match': {
+           '$and':[
+              {
+               'createdAt': {
+               '$gte': new Date(fromDate), 
+               '$lte': new Date(toDate)
+                }
+              }
+           ]
+        }
+      },
+  {
+    '$sort': {
+      'createdAt': -1
+    }
+  }, {
+    '$group': {
+      '_id': {
+        '$dateToString': {
+          'format': '%d/%m/%Y', 
+          'date': '$createdAt', 
+          'timezone': '+03:00'
+        }
+      }, 
+      'average': {
+        '$avg': '$amount'
+      }
+    }
+  }, {
+    '$group': {
+      '_id': 'graph', 
+      'data': {
+        '$push': {
+          'x': '$_id', 
+          'y': '$average', 
+          'color': '#533483'
+        }
+      }
+    }
+  }
+])
+
+      if(usages.length >= 0) { return res.status(200).json({ message: 'Usages Chart', data: usages })} else {
+        return res.status(404).json({ message: 'No usages found', data:  usages })
+      }  
+
+
+  } catch(error) {
+    let code = error.errors ? 422 : 500
+    let response = error.errors ? error.errors[0] : error.message
+    return res.status(code).json({ message: response })
+  }
+}
+
+
 const getDeviceUsages = async (req, res) => {
   try {
       const { id } = req.query
@@ -289,7 +362,7 @@ const getDeviceUsages = async (req, res) => {
 
 const getUsages = async (req, res) => {
   try {
-      const { id, prediction, usage } = req.query
+      const { id, prediction, usage, graph } = req.query
   
       if(prediction) {
         const prediction = await Usage.aggregate([
@@ -353,6 +426,7 @@ const getUsages = async (req, res) => {
           return res.status(401).json({ message:"Failed to get prediction", data: prediction})
         }
       } else if (usage) { getDeviceUsages(req, res)}
+        else if (graph) { getUsageGraph(req, res) }
 
 
   } catch(error) {
@@ -361,7 +435,6 @@ const getUsages = async (req, res) => {
     return res.status(code).json({ message: response })
   }
 }
-
 
 const getSpecificFile = async (req, res) => {
   try {

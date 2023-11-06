@@ -6,11 +6,13 @@ import Topnav from '../../components/topbar/Topnav'
 import Empty from '../../components/empty/Empty'
 import Loader from "../../components/loader/Loader"
 import MenuIcon from '../../components/menuitem/MenuIcon'
+import Chart from '../../components/chart/Chart'
 import { Calendar } from 'primereact/calendar'
 import { usePrediction } from './usePrediction'
 import { Dropdown } from 'primereact/dropdown'
 import { useGlobalContextHook } from "../../hook/useGlobalContextHook"
 import { BiCalendar, BiChart } from 'react-icons/bi'
+import { Knob } from 'primereact/knob'
 
 function Prediction() {
 const { isEnglish } = useGlobalContextHook()
@@ -21,10 +23,12 @@ const {
   period,
   setPeriod,
   periods,
-  usages
+  usages,
+  prediction,
+  graph
 } = usePrediction()
 
-//console.log(period)
+//console.log(prediction)
   return (
     <div className='page-container'>
       <Topnav  page="home"/>
@@ -44,6 +48,17 @@ const {
                      optionLabel="name" placeholder="Today" className="w-full"  style={{ margin: 15 }}/>
                 </div>
               
+              <h3>Prediction</h3>
+              <div className='prediction-box'>
+                <div className="card flex justify-content-center">
+                    <Knob value={prediction.toFixed(0)} size={200}strokeWidth={5} />
+               </div>
+                 <p>Days left</p>
+              </div>
+              <div className='usage-graph'>
+                <h3>Recently usages chart</h3>
+                 { graph !== null ? <Chart data={graph} />: null}
+              </div>
               </div>
             <div className='usage-sider'>
               <h3>{ period }</h3>

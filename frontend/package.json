@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@nivo/core": "^0.83.0",
+    "@nivo/line": "^0.83.0",
     "@react-google-maps/api": "^2.19.2",
     "date-fns": "^2.30.0",
     "primeflex": "^3.3.1",

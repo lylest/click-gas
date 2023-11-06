@@ -7,10 +7,11 @@ import { useState, useEffect } from "react"
 
 export const usePrediction =()=> {
     const { id } = useParams()
-    const [ prediction, setPrediction] = useState([])
+    const [ prediction, setPrediction] = useState(0)
     const [ device, useDevice] = useState(null)
     const [ period, setPeriod ] = useState("today")
     const [ usages, setUsages ] = useState([])
+    const [ graph, setGraph ] = useState(null)
     const [ dates, setDates ] = useState([new Date(), addDays(new Date(), 1) ])
 
     const getPrediction = async() => {
@@ -22,7 +23,8 @@ export const usePrediction =()=> {
   
           const json = await response.json()
           if(response.ok) {
-           // console.log(json, "prediction")
+           //console.log(json, "prediction")
+           setPrediction(json[0].predictedDaysToEmpty)
           }
       
           if(!response.ok){
@@ -30,6 +32,7 @@ export const usePrediction =()=> {
           }
       
         } catch(error){
+          console.log(error)
           toast.error('Error during finding device')
         }
     }
@@ -59,11 +62,41 @@ export const usePrediction =()=> {
       } catch(error){
         toast.error('Error during finding device')
       }
-  }
+    }
+
+    const usageChart = async() => {
+      try {
+        const secondDate = addDays(dates[0], 1)
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/read/usages?id=${id}&graph=yes`, {
+          method: 'POST',
+          body:JSON.stringify({
+            fromDate:format(dates[0], 'MM/dd/yyyy'),
+            toDate:dates[1] === null ? format(secondDate, 'MM/dd/yyyy') : format(dates[1], 'MM/dd/yyyy')
+          }),
+          credentials: "include",
+          headers: { 'Content-Type': 'application/json'}
+        })
+
+        const json = await response.json()
+        if(response.ok) {
+           setGraph(json.data)
+        }
+    
+        if(!response.ok){
+          toast.error(json.message)
+        }
+    
+      } catch(error){
+        toast.error('Error during finding device')
+      }
+    }
+
+
     useEffect(() => {
         if(id) { 
           getPrediction()
           getUsages()
+          usageChart()
         }
     },[ id, period, dates ])
 
@@ -111,6 +144,8 @@ export const usePrediction =()=> {
         { name: "Last three year", value:"Last three year" },
     ]
 
+
+
     return {
         prediction,
         device,
@@ -119,6 +154,7 @@ export const usePrediction =()=> {
         period,
         setPeriod,
         periods,
-        usages
+        usages,
+        graph
     }
 }
