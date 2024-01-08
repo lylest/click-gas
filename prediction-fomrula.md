@@ -10,7 +10,7 @@ Predicted Days Remaining=
 Average Daily Gas Consumption (in kg/day)
 Current Gas Level (in kg)−Final Gas Level (in kg)
 ​
- 
+
 
 In your case, you can calculate it like this:
 

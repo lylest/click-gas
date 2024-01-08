@@ -16,15 +16,16 @@ export const usePrediction =()=> {
 
     const getPrediction = async() => {
         try {
-          const response = await fetch(`${import.meta.env.VITE_API_URL}/read/usages?id=${id}&prediction=yes`, {
+          const response = await fetch(`${import.meta.env.VITE_API_URL}/read/customers?byPrediction=all&deviceId=${id}`, {
             method: 'GET',
             credentials: "include"
           })
   
           const json = await response.json()
           if(response.ok) {
-           //console.log(json, "prediction")
-           setPrediction(json[0].predictedDaysToEmpty)
+              if(json.data.length > 0) {
+              setPrediction(json.data[0].results[0].value)
+            } else return 0
           }
       
           if(!response.ok){
@@ -80,6 +81,7 @@ export const usePrediction =()=> {
         const json = await response.json()
         if(response.ok) {
            setGraph(json.data)
+           console.log(json.data)
         }
     
         if(!response.ok){

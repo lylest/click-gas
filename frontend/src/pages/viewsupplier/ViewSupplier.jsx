@@ -18,6 +18,7 @@ import { FaCircle } from "react-icons/fa"
 import { TbMapPin } from "react-icons/tb"
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
+import { BiLock } from 'react-icons/bi'
 import { Sidebar } from 'primereact/sidebar'
 import { useNavigate } from 'react-router-dom'
 import { InputSwitch } from "primereact/inputswitch"
@@ -234,6 +235,9 @@ function ViewSupplier() {
                            }
                          </div>
                          )) : null }
+
+              <h3 style={{ padding: 20 }}>Supplier login details</h3>
+            <MenuIcon  title={isEnglish ? "Temporary password": "Msimbo wa mda mfupi"} color="#666" rightTitle={supplier.tmpPassword} Icon={BiLock} /> 
 
         <Dialog 
             header={isEnglish ? `Edit [${activePermission !== null ?

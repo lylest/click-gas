@@ -43,7 +43,7 @@ function Login() {
               <Button label="Login" id="submit-button"onClick={() => login()}  />
               <div className="google-button" >
 
-          <p><Link to="/signup">Login as supplier</Link></p>
+          <p><Link to="/supplier-login">Login as supplier</Link></p>
           <br /> <br />
  </div>
 </div>

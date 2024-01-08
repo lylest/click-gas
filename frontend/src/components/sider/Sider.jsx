@@ -4,13 +4,15 @@ import Divider from './Divider'
 import logo from '../../assets/logo.png'
 import MenuItem from '../menuitem/MenuItem'
 import { Button } from 'primereact/button'
-import { useMenuList } from './menulist'
+import { useMenuList } from './MenuList'
 import { useGlobalContextHook } from '../../hook/useGlobalContextHook'
  
 function Sider() {
   const {  menulist } = useMenuList()
-  const { isEnglish, dispatch } = useGlobalContextHook()
- const roleId = 1
+  const { isEnglish, dispatch, currentUser } = useGlobalContextHook()
+  const { roleId } =  currentUser
+ // console.log(currentUser)
+
   return (
     <div className="sider-wrapper">
        <div className='sider-little-bar'>
@@ -19,7 +21,7 @@ function Sider() {
        <h3 className='sider-title-left'>Click-Gas</h3>
        </div>
   
-    { roleId === 2 ?
+    { roleId == 2 ?
     <>
     { menulist.user.menu.map((item, index) => (
           item.name === "space" ? <Divider /> :
@@ -29,7 +31,7 @@ function Sider() {
         ))
       }
     </> : 
-    roleId === 1 ? 
+    roleId == 1 ? 
     <>
     { menulist.admin.menu.map((item, index) => (
           item.name === "space" ? <Divider /> :

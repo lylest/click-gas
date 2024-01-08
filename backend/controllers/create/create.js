@@ -54,9 +54,10 @@ const create = async (req, res) => {
 
 const updateDeviceDetails = async (req, res, deviceId) => {
   try {
-    const { amount } = req.body
+    const { amount, batteryLevel } = req.body
     const updatedDevice = await Device.findByIdAndUpdate(deviceId, {
-          gasLevel:amount
+          gasLevel:amount,
+          batteryPercentage: batteryLevel
      }, {
       new: true
     })
@@ -74,7 +75,7 @@ const updateDeviceDetails = async (req, res, deviceId) => {
 const addUsage = async (req, res) => {
   try {
     const { body } = req
-    const { serialNumber, amount } = req.body
+    const { serialNumber, amount, batteryLevel } = req.body
 
     usageValidators.validateSync(body, {
       abortEarly: false,

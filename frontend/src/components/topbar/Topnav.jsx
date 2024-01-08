@@ -21,7 +21,7 @@ const[ visible, setVisible] = useState(false)
             severity="secondary" 
           aria-label="filter" />
       </div>
-      <Sidebar visible={visible} onHide={() => setVisible(false)}>
+      <Sidebar visible={visible} onHide={() => setVisible(false)} >
          <Sider />
       </Sidebar>
     </div>

@@ -10,7 +10,7 @@ import Topnav from '../../components/topbar/Topnav'
 import { useSalesHook } from "../../pages/sales/useSalesHook"
 import { useSupplierHook } from '../suppliers/useSupplierHook'
 import { useOrdersHook } from '../orders/useOrdersHook'
-import { useCustomerHook } from '../customers/useCustomerHook'
+import { useCustomerHook } from '../../pages/customers/tabs/listcustomers/useCustomerHook'
 import { useDevicesHook } from '../devices/useDevicesHook'
 import { useGlobalContextHook } from "../../hook/useGlobalContextHook"
   

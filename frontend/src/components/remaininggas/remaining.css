@@ -1,0 +1,22 @@
+
+.p-bar {
+    width: 150px;
+    height: 30px;
+    border-radius: 20px;
+   background-color: rgba(0, 133, 66, 0.5);
+}
+.p-line {
+    width:0%;
+    height: 30px;
+    border-radius: 30rem 0rem 0rem 30rem;
+    background-color: #008542;
+}
+.p-bar p {
+    font-size: 12px;
+    color:#f2f2f2;
+    text-align: center;
+    padding: 6px 5px 5px 5px;
+    position:absolute;
+    margin-left: 30px;
+    font-weight: 500;
+}

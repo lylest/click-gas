@@ -31,7 +31,7 @@ import { BiBattery, BiCalendar, BiChip, BiCircle, BiDollar, BiEnvelope, BiGasPum
 function Devices() {
     const  popoverRef = useRef(null)
     const  navigate = useNavigate()
-    const { isEnglish } = useGlobalContextHook()
+    const { isEnglish, currentUser } = useGlobalContextHook()
     const { suppliers } = useSupplierHook()
     const { isLoaded } = useLoadScript({
         id: 'script-loader',
@@ -78,14 +78,12 @@ function Devices() {
         editOpen, 
         setEditOpen,
         setLocation,
-        setCenter,
-        setCords,
         activateDevice,
         popupOpen, 
         setPopupOpen,
         setActivationCode,
         confirmDeviceActivation,
-        isOpenPopup, setIsOpenPopup
+        setRefresh
     } = useDevicesHook()
 
     const footerContent = (
@@ -165,7 +163,7 @@ function Devices() {
   const paginatorLeft = <Button 
     type="button" 
     icon="pi pi-refresh" 
-    text onClick={() => {}} />
+    text onClick={() => setRefresh(prev => !prev )} />
     
     const customIcons = (
         <React.Fragment>
@@ -337,11 +335,11 @@ function Devices() {
             <InputNumber id="username" aria-describedby="username-help" onValueChange={(e) => setSellingPrice(e.target.value)} />
         </div> 
 
-        <div className="flex flex-column gap-2"> 
+        { currentUser.roleId == 1 ? <div className="flex flex-column gap-2"> 
         <label htmlFor="suppliers" style={{ paddingTop: 15 }}>{isEnglish ? "Suppliers": "Wasambazaji"}</label>
             <Dropdown value={selectedSupplier} onChange={(e) => setSelectedSupplier(e.value)} options={suppliers} optionLabel="fullName" placeholder="Select Supplier" 
                id="suppliers" filter valueTemplate={selectedSupplierTemplate} itemTemplate={supplierOptionTemplate} className="w-full " />
-        </div>
+        </div> : null}
 
         <div className="flex flex-column gap-2" style={{ marginTop: 15 }}>
             <label htmlFor="username">{isEnglish ? "Passcode": "Msimbo"}</label> 
@@ -391,11 +389,11 @@ function Devices() {
             <InputNumber id="username" value={sellingPrice} aria-describedby="username-help" onValueChange={(e) => setSellingPrice(e.target.value)} />
         </div> 
 
-        <div className="flex flex-column gap-2"> 
+        { currentUser.roleId == 1 ? <div className="flex flex-column gap-2"> 
         <label htmlFor="suppliers" style={{ paddingTop: 15 }}>{isEnglish ? "Suppliers": "Wasambazaji"}</label>
             <Dropdown value={selectedSupplier} onChange={(e) => setSelectedSupplier(e.value)} options={suppliers} optionLabel="fullName" placeholder="Select Supplier" 
                id="suppliers" filter valueTemplate={selectedSupplierTemplate} itemTemplate={supplierOptionTemplate} className="w-full " />
-        </div>
+        </div> : null}
 
         <div className="flex flex-column gap-2" style={{ marginTop: 15 }}>
             <label htmlFor="username">{isEnglish ? "Passcode": "Msimbo"}</label> 

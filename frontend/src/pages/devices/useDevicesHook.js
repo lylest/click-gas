@@ -5,6 +5,7 @@ import { useGlobalContextHook } from "../../hook/useGlobalContextHook"
 
 export const useDevicesHook =()=> {
     const { currentUser, isEnglish } = useGlobalContextHook()
+    const { roleId } = currentUser
     const [ devices, setDevices] = useState([])
     const [ visible, setVisible ] = useState(false)
     const [ refresh, setRefresh ] = useState(false)
@@ -67,7 +68,7 @@ export const useDevicesHook =()=> {
             body: JSON.stringify({
                 serialNumber:serialNumber,
                 passcode:passcode,
-                supplier:selectedSupplier._id,
+                supplier: roleId == 1 ? selectedSupplier._id: currentUser._id,
                 productName:productName,
                 weight:weight,
                 buyingPrice:buyingPrice,
@@ -205,7 +206,7 @@ export const useDevicesHook =()=> {
           body: JSON.stringify({
               serialNumber:serialNumber,
               passcode:passcode,
-              supplier:selectedSupplier._id,
+              supplier: roleId == 1 ? selectedSupplier._id: currentUser._id,
               productName:productName,
               weight:weight,
               buyingPrice:buyingPrice,
@@ -316,8 +317,8 @@ export const useDevicesHook =()=> {
     useEffect(()=> {
         if(currentUser) {
             const { roleId } = currentUser
-            if(roleId === 1) { listAllDevices() } 
-            if(roleId === 2) { listSupplierDevices() }
+            if(roleId == 1) { listAllDevices() } 
+            if(roleId == 2) { listSupplierDevices() }
         }
     },[currentUser, refresh])
 
@@ -365,6 +366,7 @@ export const useDevicesHook =()=> {
         setPopupOpen,
         setActivationCode,
         confirmDeviceActivation,
-         isOpenPopup, setIsOpenPopup
+         isOpenPopup, setIsOpenPopup,
+         setRefresh,
     }
 }

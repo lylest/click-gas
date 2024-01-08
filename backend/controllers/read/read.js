@@ -8,6 +8,7 @@ const { Order }  = require("../../Models/Order")
 const { Device } = require("../../Models/Device")
 const { Supplier } = require("../../Models/Supplier")
 const { Customer } = require("../../Models/Customer")
+const { predictionAlogorathim } = require("../../prediction/node/run-impulse")
 const validators = require("../../validators/userValidators")
 
 const read = async (req, res) => {
@@ -301,11 +302,9 @@ const getUsageGraph = async (req, res) => {
     }
   }
 ])
-
       if(usages.length >= 0) { return res.status(200).json({ message: 'Usages Chart', data: usages })} else {
         return res.status(404).json({ message: 'No usages found', data:  usages })
       }  
-
 
   } catch(error) {
     let code = error.errors ? 422 : 500
@@ -376,7 +375,8 @@ const getUsages = async (req, res) => {
                 ]
               }
             }
-          }, {
+          }, 
+          {
             '$sort': {
               'createdAt': 1
             }
@@ -419,9 +419,7 @@ const getUsages = async (req, res) => {
             }
           }
         ]) 
-
-
-        
+    
         if(prediction) { return res.status(200).json(prediction) } else {
           return res.status(401).json({ message:"Failed to get prediction", data: prediction})
         }
@@ -648,15 +646,98 @@ const searchCustomer = async (req, res) => {
 }
 
 
+const  getCustomersByPrediction = async (req, res) => {
+  try {
+     const { deviceId } = req.query
+     const deviceData = await Usage.aggregate([
+  {
+    '$match': {
+      '$expr': {
+        '$eq': [
+          '$device', {
+            '$toObjectId':deviceId
+          }
+        ]
+      }
+    }
+  }, {
+    '$sort': {
+      'createdAt': -1
+    }
+  }, {
+    '$limit': 2
+  }, {
+    '$group': {
+      '_id': 'periods', 
+      'all': {
+        '$push': {
+          'createdAt': '$createdAt', 
+          'amount': '$amount'
+        }
+      }
+    }
+  }, {
+    '$project': {
+      '_id': 0, 
+      'timeDifferenceInHours': {
+        '$dateDiff': {
+          'startDate': {
+            '$arrayElemAt': [
+              '$all.createdAt', 1
+            ]
+          }, 
+          'endDate': {
+            '$arrayElemAt': [
+              '$all.createdAt', 0
+            ]
+          }, 
+          'unit': 'hour', 
+          'timezone': '+03:00', 
+          'startOfWeek': 'mon'
+        }
+      }, 
+      'gasDifference': {
+        '$subtract': [
+          {
+            '$arrayElemAt': [
+              '$all.amount', 1
+            ]
+          }, {
+            '$arrayElemAt': [
+              '$all.amount', 0
+            ]
+          }
+        ]
+      }
+    }
+  }
+])
+
+if (deviceData.length > 0) {
+  const gasDifference = deviceData[0].gasDifference
+  const timeDifferenceInHours = deviceData[0].timeDifferenceInHours
+  const prediction = await predictionAlogorathim(`${gasDifference},${timeDifferenceInHours}`)
+  return res.status(200).json({ message:"predicton", data: prediction })
+  
+} else {
+  return res.status(200).json({ message: "device not found", data: 0 })
+}
+  } catch (err) {
+     console.log(err)
+  }
+}
+
 const getCustomer = async (req, res) => {
   try {
-      const { id, supplierId, search } = req.query
+      const { id, supplierId, search, byPrediction } = req.query
       if(id) {
          getSpecificCustomer(req, res)
       } else if (supplierId) {
          getSupplierCustomers(req, res)
       } else if (search) { 
         searchCustomer(req, res)
+      } else if (byPrediction) {
+        getCustomersByPrediction(req, res)
       } else {
         const allCustomers = await Customer.find({ customerStatus:{ $ne: 'deleted' }})
           .populate({ path:"device", model:"devices"})
@@ -677,7 +758,7 @@ const getSupplierDevices = async (req, res) => {
   try {
     const { supplierId } = req.query
     const supplierDevices = await Device.find({ supplier: supplierId, deviceStatus:{ $ne: 'deleted' }})
-   
+    
     if(supplierDevices.length >= 0) { return res.status(200).json({ message:"All Supplier devices", data:supplierDevices })} else {
       return res.status(442).json({ message: 'Failed to find all supplier devices', data: supplierDevices })
     }
@@ -951,9 +1032,18 @@ const getSpecificUser = async(req, res) => {
     else if (search) { searchUser(req, res) }
     else {
       const userDetails = await Users.findOne({ _id: userId },{ password: 0, _id:1, })
-      if(userDetails !== null) { return res.status(200).json({ message: 'Profile details', data: userDetails})} else { 
-        return res.status(500).json({ message:'Failed to find user profile ', data: null })
-        }
+      if(userDetails !== null) { 
+          return res.status(200).json({ message: 'Profile details', data: userDetails})
+      } else { 
+         const supplierDetails = await Supplier.findOne({ _id: userId }, { password: 0, tmpPassword: 0 })
+         
+         if(supplierDetails !== null) {
+            return res.status(200).json({ message: 'Profile details', data: supplierDetails})
+         } else {
+            return res.status(500).json({ message:'Failed to find user profile ', data: null })
+         }
+
+      }
     }
 
   } catch(err) {
@@ -995,6 +1085,7 @@ const login = async (req, res) => {
       const response = {
         message: "Login successful",
         user: userData,
+        token: token
       };
       res.cookie("token", token, { maxAge: maxAge, httpOnly: true }); // create  cookies to store token
       return res.status(200).json(response);

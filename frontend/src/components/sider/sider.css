@@ -83,3 +83,6 @@
 .language-switch {
     margin: 15px 15px 10px 30px;
 }
+.sider-wrapper {
+    background-color: var( --primary-mid-dark2-color);
+}

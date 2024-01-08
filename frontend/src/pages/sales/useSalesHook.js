@@ -48,7 +48,7 @@ export const useSalesHook =() => {
 
           const json = await response.json()
           if(response.ok) {
-             setSales(json.data)
+             setSales(json.data[0])
              setIsLoading(false)
           }
       
@@ -121,11 +121,12 @@ export const useSalesHook =() => {
     useEffect(() => {
         if(currentUser) {
             const { roleId } = currentUser
-            if(roleId === 1) { listSales() }
-            if(roleId === 2) { listSupplierSales() }
+            if(roleId == 1) { listSales() }
+            if(roleId == 2) { listSupplierSales() }
         }
     },[refresh])
 
+   // console.log(sales)
     return {
         sales,
         isLoading,

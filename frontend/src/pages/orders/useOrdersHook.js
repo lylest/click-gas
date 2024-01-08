@@ -37,6 +37,29 @@ export const useOrdersHook =()=> {
         }
     }
 
+    const listSupplierOrders = async() => {
+        try {
+          const response = await fetch(`${import.meta.env.VITE_API_URL}/read/orders?supplierId=${currentUser._id}`,{
+            method: 'GET',
+            credentials: "include"
+          })
+
+          const json = await response.json()
+          if(response.ok) {
+             setOrders(json.data)
+             setIsLoading(false)
+          }
+      
+          if(!response.ok){
+            setIsLoading(false)
+            toast.error(json.message)
+          }
+      
+        } catch(error){
+          toast.error('Error during listing orders')
+        }
+    }
+
     let menuItems = [
         {
          label:isEnglish ? "Options": "Chagua",
@@ -146,6 +169,7 @@ export const useOrdersHook =()=> {
     } 
     
     const showRoute = async () => {
+      try {
       setVisible(true)
       setDirections(null)
       const service = new window.google.maps.DirectionsService()
@@ -154,18 +178,23 @@ export const useOrdersHook =()=> {
         destination:destination,
         travelMode:window.google.maps.TravelMode.DRIVING
       },(result, status) => {
+        //sometimes it fails to find a route
           if(status === "OK" && result) {
              setDirections(result)
           } else {
             toast.error("Failed to suggest suitable direction")
           }
       })
+      } catch (err) {
+         console.log(err)
+      }
     }
 
     useEffect(() => {
         if(currentUser) {
             const { roleId } = currentUser
-            if(roleId === 1) { listOrders()}
+            if(roleId == 1) { listOrders() }
+            if(roleId == 2) { listSupplierOrders() }
         }
     },[refresh])
 

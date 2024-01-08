@@ -96,6 +96,7 @@ const confirm1 = () => {
   const commissionTemplate =(item) => { return item.commission.toLocaleString() }
   const netSaleTemplate =(item) => { return item.netSale.toLocaleString() }
 
+  console.log(sales)
 
   return (
   <div className='page-container'>
